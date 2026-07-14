@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengaturan - Admin Pelaporan Desa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+  <div class="admin">
+    <!-- Sidebar -->
+    <aside class="admin__sidebar" id="sidebar">
+      <div class="admin__sidebar-brand">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <div>
+          <div class="admin__sidebar-title">Pelaporan Desa</div>
+          <span class="admin__sidebar-sub">{{ session.admin_name }}</span>
+        </div>
+      </div>
+      <nav class="admin__nav">
+        <a href="../admin/" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="../admin/reports" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          Kelola Laporan
+        </a>
+        <a href="../admin/warga" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Kelola Warga
+        </a>
+        <a href="../admin/kategori" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+            <line x1="9" y1="6" x2="15" y2="6"/>
+            <line x1="9" y1="10" x2="15" y2="10"/>
+            <line x1="9" y1="14" x2="13" y2="14"/>
+          </svg>
+          Kategori
+        </a>
+        <a href="../admin/pengumuman" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+          Pengumuman
+        </a>
+        <a href="../admin/pengaturan" class="admin__nav-link active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          Pengaturan
+        </a>
+      </nav>
+      <div class="admin__sidebar-footer">
+        <a href="../admin/logout" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Keluar
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Area -->
+    <div class="admin__main">
+      <header class="admin__header">
+        <button class="admin__toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <div class="admin__header-title">
+          <h1>Pengaturan</h1>
+          <span>Konfigurasi sistem pelaporan desa</span>
+        </div>
+        <div class="admin__header-actions">
+          <a href="/" class="admin__header-link" title="Kembali ke Website">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </a>
+          <div class="admin__header-user">
+            <img src="https://ui-avatars.com/api/?name=Admin&background=1A56DB&color=fff&size=36" alt="Admin">
+          </div>
+        </div>
+      </header>
+
+      <div class="admin__content">
+        <!-- Profil Desa -->
+        <div class="admin__card">
+          <div class="admin__card-header">
+            <h2 class="admin__card-title">Profil Desa</h2>
+          </div>
+          <form method="POST" action="../admin/pengaturan">
+            <div class="admin__settings">
+              <div class="admin__settings-grid">
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Nama Desa / Kelurahan</label>
+                  <input type="text" name="nama_desa" class="admin__filter-input" value="{{ settings.nama_desa }}">
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">RT</label>
+                  <input type="text" name="rt" class="admin__filter-input" value="{{ settings.rt }}">
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">RW</label>
+                  <input type="text" name="rw" class="admin__filter-input" value="{{ settings.rw }}">
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Kecamatan</label>
+                  <input type="text" name="kecamatan" class="admin__filter-input" value="{{ settings.kecamatan }}">
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Kota/Kabupaten</label>
+                  <input type="text" name="kota" class="admin__filter-input" value="{{ settings.kota }}">
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Provinsi</label>
+                  <input type="text" name="provinsi" class="admin__filter-input" value="{{ settings.provinsi }}">
+                </div>
+              </div>
+              <div class="admin__settings-actions">
+                <button type="submit" class="admin__submit-btn">Simpan Perubahan</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Akun Admin -->
+        <div class="admin__card">
+          <div class="admin__card-header">
+            <h2 class="admin__card-title">Akun Admin</h2>
+          </div>
+          <form method="POST" action="../admin/pengaturan">
+            <div class="admin__settings">
+              <div class="admin__settings-grid">
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Nama Lengkap</label>
+                  <input type="text" name="nama_admin" class="admin__filter-input" value="{{ admin_data.nama }}">
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Email</label>
+                  <input type="email" name="email" class="admin__filter-input" value="{{ admin_data.email }}">
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Username</label>
+                  <input type="text" name="username" class="admin__filter-input" value="{{ admin_data.username }}">
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Password Baru</label>
+                  <input type="password" name="password" class="admin__filter-input" placeholder="Biarkan kosong jika tidak diubah">
+                </div>
+              </div>
+              <div class="admin__settings-actions">
+                <button type="submit" class="admin__submit-btn">Simpan Perubahan</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Pengaturan Sistem -->
+        <div class="admin__card">
+          <div class="admin__card-header">
+            <h2 class="admin__card-title">Pengaturan Sistem</h2>
+          </div>
+          <form method="POST" action="../admin/pengaturan">
+            <div class="admin__settings">
+              <div class="admin__settings-toggle">
+                <div class="admin__toggle-info">
+                  <h4>Notifikasi Email</h4>
+                  <p>Kirim notifikasi email saat ada laporan baru</p>
+                </div>
+                <label class="admin__switch">
+                  <input type="checkbox" name="notifikasi_email" {% if settings.notifikasi_email %}checked{% endif %}>
+                  <span class="admin__switch-slider"></span>
+                </label>
+              </div>
+              <div class="admin__settings-toggle">
+                <div class="admin__toggle-info">
+                  <h4>Verifikasi Laporan</h4>
+                  <p>Laporan baru harus diverifikasi sebelum diproses</p>
+                </div>
+                <label class="admin__switch">
+                  <input type="checkbox" name="verifikasi_laporan" {% if settings.verifikasi_laporan %}checked{% endif %}>
+                  <span class="admin__switch-slider"></span>
+                </label>
+              </div>
+              <div class="admin__settings-toggle">
+                <div class="admin__toggle-info">
+                  <h4>Registrasi Warga</h4>
+                  <p>Izinkan warga mendaftar akun secara mandiri</p>
+                </div>
+                <label class="admin__switch">
+                  <input type="checkbox" name="registrasi_warga" {% if settings.registrasi_warga %}checked{% endif %}>
+                  <span class="admin__switch-slider"></span>
+                </label>
+              </div>
+              <div class="admin__settings-toggle">
+                <div class="admin__toggle-info">
+                  <h4>Laporan Anonim</h4>
+                  <p>Izinkan warga membuat laporan tanpa login</p>
+                </div>
+                <label class="admin__switch">
+                  <input type="checkbox" name="laporan_anonim" {% if settings.laporan_anonim %}checked{% endif %}>
+                  <span class="admin__switch-slider"></span>
+                </label>
+              </div>
+              <div class="admin__settings-actions">
+                <button type="submit" class="admin__submit-btn">Simpan Pengaturan</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../static/js/script.js"></script>
+</body>
+</html>

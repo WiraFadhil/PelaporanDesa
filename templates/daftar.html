@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar - Pelaporan Desa RT 02 / RW 01</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="login-page">
+  <div class="login">
+    <div class="login__card">
+      <div class="login__header">
+        <div class="login__logo">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+        </div>
+        <h1 class="login__title">Daftar Akun</h1>
+        <p class="login__subtitle">Daftar untuk membuat dan melacak laporan</p>
+      </div>
+      {% if error %}
+      <div style="background:#FEF2F2;border:1px solid #FCA5A5;border-radius:8px;padding:10px 14px;margin-bottom:16px;text-align:center;color:#DC2626;font-size:14px">{{ error }}</div>
+      {% endif %}
+      <form class="login__form" method="POST" action="daftar">
+        <div class="login__group">
+          <label class="login__label" for="nik">NIK <span style="color:var(--red)">*</span></label>
+          <div class="login__input-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="12" cy="10" r="3"/><path d="M12 13c-3.31 0-6 1.34-6 3v1h12v-1c0-1.66-2.69-3-6-3z"/></svg>
+            <input type="text" class="login__input" id="nik" name="nik" placeholder="Masukkan NIK" required>
+          </div>
+        </div>
+        <div class="login__group">
+          <label class="login__label" for="nama">Nama Lengkap <span style="color:var(--red)">*</span></label>
+          <div class="login__input-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" class="login__input" id="nama" name="nama" placeholder="Masukkan nama lengkap" required>
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="login__group">
+            <label class="login__label" for="rt">RT</label>
+            <div class="login__input-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              <input type="text" class="login__input" id="rt" name="rt" placeholder="RT">
+            </div>
+          </div>
+          <div class="login__group">
+            <label class="login__label" for="rw">RW</label>
+            <div class="login__input-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              <input type="text" class="login__input" id="rw" name="rw" placeholder="RW">
+            </div>
+          </div>
+        </div>
+        <div class="login__group">
+          <label class="login__label" for="alamat">Alamat</label>
+          <div class="login__input-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <input type="text" class="login__input" id="alamat" name="alamat" placeholder="Masukkan alamat">
+          </div>
+        </div>
+        <div class="login__group">
+          <label class="login__label" for="telepon">Telepon</label>
+          <div class="login__input-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <input type="text" class="login__input" id="telepon" name="telepon" placeholder="Masukkan nomor telepon">
+          </div>
+        </div>
+        <div class="login__group">
+          <label class="login__label" for="password">Password <span style="color:var(--red)">*</span></label>
+          <div class="login__input-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" class="login__input" id="password" name="password" placeholder="Minimal 6 karakter" required>
+          </div>
+        </div>
+        <button type="submit" class="login__btn">Daftar</button>
+      </form>
+      <div class="login__footer">
+        <a href="masuk">Sudah punya akun? Masuk disini</a>
+        <br><br>
+        <a href="./">← Kembali ke Beranda</a>
+      </div>
+    </div>
+  </div>
+  <script src="static/js/script.js"></script>
+</body>
+</html>

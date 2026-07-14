@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buat Laporan - Pelaporan Desa RT 02 / RW 01</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <div class="header__brand">
+        <div class="header__logo-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="header__brand-text">
+          <span class="header__title">Pelaporan Desa</span>
+          <span class="header__subtitle">RT 02 / RW 01</span>
+        </div>
+        <button class="header__toggle" id="headerToggle" aria-label="Menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+      <nav class="header__nav">
+        <a href="./" class="header__nav-link">Beranda</a>
+        <a href="laporan-saya" class="header__nav-link">Laporan Saya</a>
+        <a href="buat-laporan" class="header__nav-link active">Buat Laporan</a>
+        <a href="informasi" class="header__nav-link">Informasi</a>
+      </nav>
+      <div class="header__user">
+        <div class="header__profile">
+          <div class="header__avatar">
+            <img src="https://ui-avatars.com/api/?name={{ session.resident_name | urlencode }}&background=1A56DB&color=fff&size=40" alt="Avatar">
+          </div>
+          <span class="header__greeting">Halo, {{ session.resident_name }}</span>
+          <div class="header__dropdown" id="headerDropdown">
+            <a href="profil" class="header__dropdown-item">Profil</a>
+            <a href="keluar" class="header__dropdown-item header__dropdown-item--danger">Keluar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container page-hero__inner">
+        <div class="page-hero__content">
+          <nav class="page-hero__breadcrumb">
+            <a href="./">Beranda</a>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <span>Buat Laporan</span>
+          </nav>
+          <h1 class="page-hero__title">Buat Laporan Baru</h1>
+          <p class="page-hero__desc">Sampaikan keluhan atau laporan Anda untuk lingkungan yang lebih baik.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        {% if error %}
+        <div style="background:#FEF2F2;border:1px solid #FCA5A5;border-radius:8px;padding:10px 14px;margin-bottom:16px;text-align:center;color:#DC2626;font-size:14px">{{ error }}</div>
+        {% endif %}
+        <form class="form" method="POST" action="buat-laporan" enctype="multipart/form-data">
+          <div class="form__card">
+            <h2 class="form__card-title">Kategori Laporan</h2>
+            <p class="form__card-desc">Pilih kategori yang sesuai dengan laporan Anda.</p>
+            <div class="form__categories">
+              {% for cat in categories %}
+              <label class="form__category">
+                <input type="radio" name="kategori" value="{{ cat.nama }}" {% if loop.first %}checked{% endif %}>
+                <div class="form__category-box">
+                  <div class="form__category-icon form__category-icon--{{ cat.warna }}">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+                  </div>
+                  <span>{{ cat.nama }}</span>
+                </div>
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="form__card">
+            <h2 class="form__card-title">Detail Laporan</h2>
+            <p class="form__card-desc">Isi informasi lengkap mengenai laporan Anda.</p>
+
+            <div class="form__group">
+              <label class="form__label" for="judul">Judul Laporan</label>
+              <input type="text" class="form__input" id="judul" name="judul" placeholder="Contoh: Jalan Berlubang di Depan Gang Mawar" required>
+            </div>
+
+            <div class="form__group">
+              <label class="form__label" for="deskripsi">Deskripsi Laporan</label>
+              <textarea class="form__textarea" id="deskripsi" name="deskripsi" rows="5" placeholder="Jelaskan secara detail mengenai masalah yang Anda laporkan..." required></textarea>
+              <span class="form__hint">Gunakan bahasa yang jelas dan sopan. Sertakan informasi penting seperti lokasi spesifik.</span>
+            </div>
+
+            <div class="form__group">
+              <label class="form__label" for="lokasi">Lokasi</label>
+              <div class="form__input-wrapper">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <input type="text" class="form__input form__input--icon" id="lokasi" name="lokasi" placeholder="Masukkan lokasi kejadian">
+              </div>
+            </div>
+
+            <div class="form__group">
+              <label class="form__label">Foto (Opsional)</label>
+              <div class="form__upload" id="uploadArea">
+                <div class="form__upload-icon">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+                <p class="form__upload-text">Klik atau seret foto ke sini</p>
+                <p class="form__upload-hint">Maks. 3 foto (JPG, PNG, WEBP) &mdash; 5MB per foto</p>
+                <input type="file" class="form__upload-input" id="foto" name="foto" multiple accept="image/png,image/jpeg,image/jpg,image/webp">
+              </div>
+              <div class="form__previews" id="previews"></div>
+            </div>
+
+            <div class="form__info" style="padding:12px 16px;background:var(--primary-light);border-radius:var(--radius-sm);font-size:13px;color:var(--text-secondary)">
+              Data diri Anda (NIK, nama, RT/RW) akan otomatis terisi dari akun Anda.
+            </div>
+          </div>
+
+          <div class="form__actions">
+            <a href="./" class="form__btn form__btn--secondary">Batal</a>
+            <button type="submit" class="form__btn form__btn--primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+              Kirim Laporan
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="lifecycle">
+      <div class="container">
+        <h2 class="lifecycle__title">Alur Status Laporan</h2>
+        <div class="lifecycle__flow">
+          <div class="lifecycle__step">
+            <div class="lifecycle__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="lifecycle__label">Diajukan</div>
+            <p class="lifecycle__desc">Laporan baru yang menunggu verifikasi oleh petugas.</p>
+          </div>
+          <div class="lifecycle__arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="lifecycle__step">
+            <div class="lifecycle__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="lifecycle__label">Diproses</div>
+            <p class="lifecycle__desc">Laporan sedang dalam proses penanganan oleh tim terkait.</p>
+          </div>
+          <div class="lifecycle__arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="lifecycle__step">
+            <div class="lifecycle__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="lifecycle__label">Selesai</div>
+            <p class="lifecycle__desc">Laporan telah selesai ditangani dan siap untuk ditinjau.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">&copy; 2025 Pelaporan Desa RT 02 / RW 01. All rights reserved.</p>
+      <div class="footer__links">
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat &amp; Ketentuan</a>
+      </div>
+    </div>
+  </footer>
+  <script src="static/js/script.js"></script>
+</body>
+</html>

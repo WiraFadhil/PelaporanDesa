@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin - Pelaporan Desa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+  <div class="admin">
+    <!-- Sidebar -->
+    <aside class="admin__sidebar" id="sidebar">
+      <div class="admin__sidebar-brand">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <div>
+          <div class="admin__sidebar-title">Pelaporan Desa</div>
+          <span class="admin__sidebar-sub">{{ session.admin_name }}</span>
+        </div>
+      </div>
+      <nav class="admin__nav">
+        <a href="../admin/" class="admin__nav-link active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="../admin/reports" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          Kelola Laporan
+        </a>
+        <a href="../admin/warga" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Kelola Warga
+        </a>
+        <a href="../admin/kategori" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+            <line x1="9" y1="6" x2="15" y2="6"/>
+            <line x1="9" y1="10" x2="15" y2="10"/>
+            <line x1="9" y1="14" x2="13" y2="14"/>
+          </svg>
+          Kategori
+        </a>
+        <a href="../admin/pengumuman" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+          Pengumuman
+        </a>
+        <a href="../admin/pengaturan" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          Pengaturan
+        </a>
+      </nav>
+      <div class="admin__sidebar-footer">
+        <a href="../admin/logout" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Keluar
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Area -->
+    <div class="admin__main">
+      <!-- Top Header -->
+      <header class="admin__header">
+        <button class="admin__toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <div class="admin__header-title">
+          <h1>Dashboard</h1>
+          <span>Selamat datang, {{ session.admin_name }}</span>
+        </div>
+        <div class="admin__header-actions">
+          <a href="/" class="admin__header-link" title="Kembali ke Website">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </a>
+          <div class="admin__header-user">
+            <img src="https://ui-avatars.com/api/?name=Admin&background=1A56DB&color=fff&size=36" alt="Admin">
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="admin__content">
+        <!-- Stats -->
+        <div class="admin__stats">
+          <div class="admin__stat">
+            <div class="admin__stat-icon admin__stat-icon--blue">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+            </div>
+            <div class="admin__stat-info">
+              <span class="admin__stat-number">{{ total }}</span>
+              <span class="admin__stat-label">Total Laporan</span>
+            </div>
+          </div>
+          <div class="admin__stat">
+            <div class="admin__stat-icon admin__stat-icon--amber">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="admin__stat-info">
+              <span class="admin__stat-number">{{ diajukan }}</span>
+              <span class="admin__stat-label">Menunggu Verifikasi</span>
+            </div>
+          </div>
+          <div class="admin__stat">
+            <div class="admin__stat-icon admin__stat-icon--blue2">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="admin__stat-info">
+              <span class="admin__stat-number">{{ diproses }}</span>
+              <span class="admin__stat-label">Sedang Diproses</span>
+            </div>
+          </div>
+          <div class="admin__stat">
+            <div class="admin__stat-icon admin__stat-icon--green">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="admin__stat-info">
+              <span class="admin__stat-number">{{ selesai }}</span>
+              <span class="admin__stat-label">Selesai</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Reports Table -->
+        <div class="admin__card">
+          <div class="admin__card-header">
+            <h2 class="admin__card-title">Laporan Terbaru</h2>
+            <a href="../admin/reports" class="admin__card-link">Lihat Semua</a>
+          </div>
+          <div class="admin__table-wrap">
+            <table class="admin__table">
+              <thead>
+                <tr>
+                  <th>Judul Laporan</th>
+                  <th class="admin__col-cat">Kategori</th>
+                  <th class="admin__col-hide">Pelapor</th>
+                  <th class="admin__col-date">Tanggal</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for r in reports %}
+                <tr>
+                  <td>{{ r.judul }}</td>
+                  <td class="admin__col-cat">{{ r.kategori }}</td>
+                  <td class="admin__col-hide">{{ r.pelapor }}</td>
+                  <td class="admin__col-date">{{ r.tanggal }}</td>
+                  <td>
+                    {% if r.status == 'Diajukan' %}
+                    <span class="admin__badge admin__badge--amber">{{ r.status }}</span>
+                    {% elif r.status == 'Diproses' %}
+                    <span class="admin__badge admin__badge--blue">{{ r.status }}</span>
+                    {% elif r.status == 'Selesai' %}
+                    <span class="admin__badge admin__badge--green">{{ r.status }}</span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    <a href="../admin/reports/edit/{{ r.id }}" class="admin__action-link">Detail</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quick Actions & Status Distribution -->
+        <div class="admin__grid-2">
+          <div class="admin__card">
+            <div class="admin__card-header">
+              <h2 class="admin__card-title">Statistik Status</h2>
+            </div>
+            <div class="admin__chart">
+              <div class="admin__chart-bar">
+                <div class="admin__chart-row">
+                  <span class="admin__chart-label">Diajukan</span>
+                  <div class="admin__chart-track">
+                    <div class="admin__chart-fill admin__chart-fill--amber" style="width: {{ (diajukan / total * 100) if total > 0 else 0 }}%"></div>
+                  </div>
+                  <span class="admin__chart-value">{{ diajukan }}</span>
+                </div>
+                <div class="admin__chart-row">
+                  <span class="admin__chart-label">Diproses</span>
+                  <div class="admin__chart-track">
+                    <div class="admin__chart-fill admin__chart-fill--blue" style="width: {{ (diproses / total * 100) if total > 0 else 0 }}%"></div>
+                  </div>
+                  <span class="admin__chart-value">{{ diproses }}</span>
+                </div>
+                <div class="admin__chart-row">
+                  <span class="admin__chart-label">Selesai</span>
+                  <div class="admin__chart-track">
+                    <div class="admin__chart-fill admin__chart-fill--green" style="width: {{ (selesai / total * 100) if total > 0 else 0 }}%"></div>
+                  </div>
+                  <span class="admin__chart-value">{{ selesai }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin__card">
+            <div class="admin__card-header">
+              <h2 class="admin__card-title">Aksi Cepat</h2>
+            </div>
+            <div class="admin__quick">
+              <a href="../admin/reports" class="admin__quick-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                Laporan Baru
+              </a>
+              <a href="../admin/warga" class="admin__quick-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                </svg>
+                Tambah Warga
+              </a>
+              <a href="../admin/pengumuman" class="admin__quick-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                Buat Pengumuman
+              </a>
+              <a href="../admin/pengaturan" class="admin__quick-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+                Pengaturan
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../static/js/script.js"></script>
+</body>
+</html>
