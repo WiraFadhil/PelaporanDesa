@@ -6,7 +6,7 @@
   <title>Pelaporan Desa - RT 02 / RW 01</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
   <header class="header">
@@ -42,7 +42,7 @@
           </div>
         </div>
         {% else %}
-        <a href="masuk" class="header__auth-btn">Masuk</a>
+        <a href="/login" class="header__auth-btn">Masuk</a>
         <a href="daftar" class="header__auth-btn header__auth-btn--primary">Daftar</a>
         {% endif %}
       </div>
@@ -129,7 +129,7 @@
         </div>
         <div class="categories">
           {% for cat in categories %}
-          <div class="categories__item">
+          <button type="button" class="categories__item categories__btn" onclick="filterKategori('{{ cat.nama|e }}', this)">
             <div class="categories__icon categories__icon--{{ cat.warna }}">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 {% if cat.icon == 'building' %}
@@ -139,27 +139,35 @@
                 {% elif cat.icon == 'trash' %}
                 <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
                 {% elif cat.icon == 'users' %}
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87m-4-6.25a4 4 0 1 0-5.99-5.25"/>
                 {% elif cat.icon == 'road' %}
                 <line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2l-4 8h8l-4-8z"/><polyline points="4 12 4 22"/><polyline points="20 12 20 22"/>
                 {% elif cat.icon == 'sun' %}
                 <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                {% elif cat.icon == 'shield' %}
+                {% elif cat.icon == 'shiel' %}
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 {% elif cat.icon == 'lightbulb' %}
                 <path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/><line x1="7" y1="10" x2="17" y2="10"/>
-                {% elif cat.icon == 'document' %}
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-                {% elif cat.icon == 'plus-circle' %}
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+                {% elif cat.icon == 'bucket' %}
+                <circle cx="12" cy="12" r="10"/><path d="M6.74 7.51l4.17-4.17a2 2 0 0 1 2.18.42l5.5 5.5a2 2 0 0 1 .42 2.18l-4.17 4.17"/>
+                {% elif cat.icon == 'heart' %}
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                {% elif cat.icon == 'file' %}
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
                 {% else %}
                 <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
                 {% endif %}
               </svg>
             </div>
             <span class="categories__label">{{ cat.nama }}</span>
-          </div>
+          </button>
           {% endfor %}
+          <button type="button" class="categories__item categories__btn categories__btn--all active" onclick="resetFilter()">
+            <div class="categories__icon categories__icon--gray">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <span class="categories__label">Semua</span>
+          </button>
         </div>
       </div>
     </section>
@@ -170,9 +178,9 @@
           <h2 class="section__title">Laporan Terbaru</h2>
           <a href="laporan-saya" class="section__link">Lihat Semua</a>
         </div>
-        <div class="feed">
+        <div class="feed" id="recentReports">
           {% for r in recent_reports %}
-          <div class="feed__card">
+          <div class="feed__card" data-kategori="{{ r.kategori }}">
             <div class="feed__thumb" style="background:{% if r.foto %}url('/uploads/{{ r.foto[0] }}') center/cover no-repeat{% else %}{% if r.status == 'Diajukan' %}#F59E0B{% elif r.status == 'Diproses' %}#3B82F6{% else %}#10B981{% endif %}{% endif %}">
               {% if not r.foto %}<span class="feed__thumb-label">{{ r.kategori[:2] }}</span>{% endif %}
             </div>
@@ -194,7 +202,7 @@
             </div>
           </div>
           {% else %}
-          <div style="text-align:center;padding:40px 20px;color:var(--text-muted)">
+          <div style="text-align:center;padding:40px 20px;color:var(--text-muted)" id="emptyReport">
             <p>Belum ada laporan yang diajukan.</p>
           </div>
           {% endfor %}
@@ -293,6 +301,47 @@
       </div>
     </div>
   </footer>
-  <script src="static/js/script.js"></script>
+  <style>
+    .categories__btn { cursor:pointer; background:none; border:none; font-family:inherit; transition:opacity .2s; }
+    .categories__btn:hover { opacity:.8; }
+    .categories__btn.active { position:relative; }
+    .categories__btn.active::after { content:''; position:absolute; bottom:-4px; left:50%; transform:translateX(-50%); width:24px; height:3px; border-radius:2px; background:var(--primary); }
+    .categories__btn--all { width:100%; flex-direction:column; }
+  </style>
+  <script src="/static/js/script.js"></script>
+  <script>
+    var filterAktif = null;
+
+    function filterKategori(kategori, btn) {
+      document.querySelectorAll('.categories__btn').forEach(function(b) { b.classList.remove('active'); });
+      if (filterAktif === kategori) {
+        filterAktif = null;
+        document.querySelector('.categories__btn--all').classList.add('active');
+      } else {
+        filterAktif = kategori;
+        btn.classList.add('active');
+      }
+
+      var cards = document.querySelectorAll('#recentReports .feed__card');
+      var visible = 0;
+      cards.forEach(function(c) {
+        var match = !filterAktif || c.getAttribute('data-kategori') === filterAktif;
+        c.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+
+      var empty = document.getElementById('emptyReport');
+      if (empty) empty.style.display = visible === 0 ? '' : 'none';
+    }
+
+    function resetFilter() {
+      filterAktif = null;
+      document.querySelectorAll('.categories__btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelector('.categories__btn--all').classList.add('active');
+      document.querySelectorAll('#recentReports .feed__card').forEach(function(c) { c.style.display = ''; });
+      var empty = document.getElementById('emptyReport');
+      if (empty) empty.style.display = 'none';
+    }
+  </script>
 </body>
 </html>

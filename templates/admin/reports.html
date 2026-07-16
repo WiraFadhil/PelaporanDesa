@@ -6,7 +6,7 @@
   <title>Kelola Laporan - Admin Pelaporan Desa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
   <div class="admin">
@@ -23,14 +23,14 @@
         </div>
       </div>
       <nav class="admin__nav">
-        <a href="../admin/" class="admin__nav-link">
+        <a href="/admin/" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             <polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
           Dashboard
         </a>
-        <a href="../admin/reports" class="admin__nav-link active">
+        <a href="/admin/reports" class="admin__nav-link active">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
@@ -39,7 +39,7 @@
           </svg>
           Kelola Laporan
         </a>
-        <a href="../admin/warga" class="admin__nav-link">
+        <a href="/admin/warga" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
             <circle cx="9" cy="7" r="4"/>
@@ -48,7 +48,7 @@
           </svg>
           Kelola Warga
         </a>
-        <a href="../admin/kategori" class="admin__nav-link">
+        <a href="/admin/kategori" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
             <line x1="9" y1="6" x2="15" y2="6"/>
@@ -57,13 +57,13 @@
           </svg>
           Kategori
         </a>
-        <a href="../admin/pengumuman" class="admin__nav-link">
+        <a href="/admin/pengumuman" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
           </svg>
           Pengumuman
         </a>
-        <a href="../admin/pengaturan" class="admin__nav-link">
+        <a href="/admin/pengaturan" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
             <circle cx="12" cy="12" r="3"/>
@@ -72,7 +72,7 @@
         </a>
       </nav>
       <div class="admin__sidebar-footer">
-        <a href="../admin/logout" class="admin__nav-link">
+        <a href="/admin/logout" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
             <polyline points="16 17 21 12 16 7"/>
@@ -116,7 +116,7 @@
           <div class="admin__card-header">
             <h2 class="admin__card-title">Filter Laporan</h2>
           </div>
-          <form method="GET" action="../admin/reports">
+          <form method="GET" action="/admin/reports">
             <div class="admin__filter">
               <div class="admin__filter-group">
                 <label class="admin__filter-label">Status</label>
@@ -206,8 +206,8 @@
                     {% endif %}
                   </td>
                   <td>
-                    <a href="../admin/reports/edit/{{ r.id }}" class="admin__action-link">Edit</a>
-                    <form method="POST" action="../admin/reports/hapus/{{ r.id }}" onsubmit="return confirm('Yakin ingin menghapus laporan ini?')">
+                    <button type="button" class="admin__action-link" data-id="{{ r.id }}" data-judul="{{ r.judul }}" data-deskripsi="{{ r.deskripsi }}" data-kategori="{{ r.kategori }}" data-status="{{ r.status }}" data-lokasi="{{ r.lokasi }}" data-catatan="{{ r.catatan }}" data-pelapor="{{ r.pelapor }}" data-nik="{{ r.nik }}" data-rt="{{ r.rt }}" data-rw="{{ r.rw }}" data-tanggal="{{ r.tanggal }}" onclick="bukaEditLaporan(this)">Edit</button>
+                    <form method="POST" action="/admin/reports/hapus/{{ r.id }}" onsubmit="return confirm('Yakin ingin menghapus laporan ini?')">
                       <button type="submit" class="admin__action-link admin__action-link--danger">Hapus</button>
                     </form>
                   </td>
@@ -219,8 +219,88 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal Edit Laporan -->
+    <div class="modal-overlay" id="modalEditLaporan">
+      <div class="modal" style="max-width:640px">
+        <div class="modal-header">
+          <h3 class="modal-title">Edit Laporan</h3>
+          <button type="button" class="modal-close" id="modalEditCloseLap">&times;</button>
+        </div>
+        <form method="POST" action="" id="formEditLaporan">
+          <div class="modal-body">
+            <div class="admin__settings-grid">
+              <div class="admin__filter-group" style="grid-column:1/-1">
+                <label class="admin__filter-label">Judul</label>
+                <input type="text" name="judul" id="editLapJudul" class="admin__filter-input" required>
+              </div>
+              <div class="admin__filter-group" style="grid-column:1/-1">
+                <label class="admin__filter-label">Deskripsi</label>
+                <textarea name="deskripsi" id="editLapDeskripsi" class="admin__filter-input" rows="3" required></textarea>
+              </div>
+              <div class="admin__filter-group">
+                <label class="admin__filter-label">Kategori</label>
+                <select name="kategori" id="editLapKategori" class="admin__filter-select">
+                  {% for cat in categories %}
+                  <option value="{{ cat.nama }}">{{ cat.nama }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="admin__filter-group">
+                <label class="admin__filter-label">Status</label>
+                <select name="status" id="editLapStatus" class="admin__filter-select">
+                  <option value="Diajukan">Diajukan</option>
+                  <option value="Diproses">Diproses</option>
+                  <option value="Selesai">Selesai</option>
+                </select>
+              </div>
+              <div class="admin__filter-group">
+                <label class="admin__filter-label">Lokasi</label>
+                <input type="text" name="lokasi" id="editLapLokasi" class="admin__filter-input">
+              </div>
+              <div class="admin__filter-group">
+                <label class="admin__filter-label">Catatan Admin</label>
+                <input type="text" name="catatan" id="editLapCatatan" class="admin__filter-input" placeholder="Catatan admin...">
+              </div>
+              <div class="admin__filter-group" style="grid-column:1/-1">
+                <div class="admin__form-info" id="editLapInfo"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="admin__page-btn" id="modalEditBatalLap">Batal</button>
+            <button type="submit" class="admin__submit-btn">Simpan Perubahan</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <script src="../static/js/script.js"></script>
+  <script src="/static/js/script.js"></script>
+  <script>
+    (function() {
+      var overlay = document.getElementById('modalEditLaporan');
+      var close = document.getElementById('modalEditCloseLap');
+      var batal = document.getElementById('modalEditBatalLap');
+      close.addEventListener('click', function() { overlay.classList.remove('open'); });
+      batal.addEventListener('click', function() { overlay.classList.remove('open'); });
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('open'); });
+    })();
+
+    function bukaEditLaporan(el) {
+      document.getElementById('formEditLaporan').action = '/admin/reports/edit/' + el.getAttribute('data-id');
+      document.getElementById('editLapJudul').value = el.getAttribute('data-judul');
+      document.getElementById('editLapDeskripsi').value = el.getAttribute('data-deskripsi');
+      document.getElementById('editLapKategori').value = el.getAttribute('data-kategori');
+      document.getElementById('editLapStatus').value = el.getAttribute('data-status');
+      document.getElementById('editLapLokasi').value = el.getAttribute('data-lokasi');
+      document.getElementById('editLapCatatan').value = el.getAttribute('data-catatan');
+      document.getElementById('editLapInfo').innerHTML =
+        '<strong>Pelapor:</strong> ' + el.getAttribute('data-pelapor') + ' (NIK: ' + el.getAttribute('data-nik') + ')<br>' +
+        '<strong>RT/RW:</strong> ' + el.getAttribute('data-rt') + '/' + el.getAttribute('data-rw') + '<br>' +
+        '<strong>Tanggal:</strong> ' + el.getAttribute('data-tanggal');
+      document.getElementById('modalEditLaporan').classList.add('open');
+    }
+  </script>
 </body>
 </html>

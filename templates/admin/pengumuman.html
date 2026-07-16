@@ -6,7 +6,7 @@
   <title>Pengumuman - Admin Pelaporan Desa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
   <div class="admin">
@@ -23,14 +23,14 @@
         </div>
       </div>
       <nav class="admin__nav">
-        <a href="../admin/" class="admin__nav-link">
+        <a href="/admin/" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             <polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
           Dashboard
         </a>
-        <a href="../admin/reports" class="admin__nav-link">
+        <a href="/admin/reports" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
@@ -39,7 +39,7 @@
           </svg>
           Kelola Laporan
         </a>
-        <a href="../admin/warga" class="admin__nav-link">
+        <a href="/admin/warga" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
             <circle cx="9" cy="7" r="4"/>
@@ -48,7 +48,7 @@
           </svg>
           Kelola Warga
         </a>
-        <a href="../admin/kategori" class="admin__nav-link">
+        <a href="/admin/kategori" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
             <line x1="9" y1="6" x2="15" y2="6"/>
@@ -57,13 +57,13 @@
           </svg>
           Kategori
         </a>
-        <a href="../admin/pengumuman" class="admin__nav-link active">
+        <a href="/admin/pengumuman" class="admin__nav-link active">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
           </svg>
           Pengumuman
         </a>
-        <a href="../admin/pengaturan" class="admin__nav-link">
+        <a href="/admin/pengaturan" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
             <circle cx="12" cy="12" r="3"/>
@@ -72,7 +72,7 @@
         </a>
       </nav>
       <div class="admin__sidebar-footer">
-        <a href="../admin/logout" class="admin__nav-link">
+        <a href="/admin/logout" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
             <polyline points="16 17 21 12 16 7"/>
@@ -109,45 +109,95 @@
       </header>
 
       <div class="admin__content">
-        <!-- Form Tambah Pengumuman -->
-        <div class="admin__card">
-          <div class="admin__card-header">
-            <h2 class="admin__card-title">Tambah Pengumuman Baru</h2>
-          </div>
-          <form method="POST" action="../admin/pengumuman/tambah">
-            <div class="admin__settings-grid admin__form-padding">
-              <div class="admin__filter-group">
-                <label class="admin__filter-label">Judul</label>
-                <input type="text" name="judul" class="admin__filter-input" placeholder="Masukkan judul pengumuman" required>
-              </div>
-              <div class="admin__filter-group">
-                <label class="admin__filter-label">Tipe</label>
-                <select name="tipe" class="admin__filter-select">
-                  <option value="Informasi">Informasi</option>
-                  <option value="Penting">Penting</option>
-                  <option value="Himbauan">Himbauan</option>
-                </select>
-              </div>
-              <div class="admin__filter-group">
-                <label class="admin__filter-label">Jam</label>
-                <input type="text" name="jam" class="admin__filter-input" placeholder="08:00 - 16:00">
-              </div>
-              <div class="admin__filter-group">
-                <label class="admin__filter-label">Isi</label>
-                <textarea name="isi" class="admin__filter-input" rows="3" placeholder="Masukkan isi pengumuman" required></textarea>
-              </div>
-            </div>
-            <div class="admin__settings-actions">
-              <button type="submit" class="admin__submit-btn">Simpan Pengumuman</button>
-            </div>
-          </form>
-        </div>
-
         <!-- Tabel Pengumuman -->
+
         <div class="admin__card">
           <div class="admin__card-header">
             <h2 class="admin__card-title">Daftar Pengumuman</h2>
-            <span class="admin__card-badge">{{ announcements|length }} Pengumuman</span>
+            <div class="admin__card-actions">
+              <span class="admin__card-badge">{{ announcements|length }} Pengumuman</span>
+              <button type="button" class="admin__submit-btn" id="tambahPengumumanBtn">+ Tambah Pengumuman</button>
+            </div>
+          </div>
+
+          <!-- Modal Tambah Pengumuman -->
+          <div class="modal-overlay" id="modalTambahPengumuman">
+            <div class="modal" style="max-width:560px">
+              <div class="modal-header">
+                <h3 class="modal-title">Tambah Pengumuman Baru</h3>
+                <button type="button" class="modal-close" id="modalClosePgm">&times;</button>
+              </div>
+              <form method="POST" action="/admin/pengumuman/tambah">
+                <div class="modal-body">
+                  <div class="admin__settings-grid" style="grid-template-columns:1fr">
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Judul</label>
+                      <input type="text" name="judul" class="admin__filter-input" placeholder="Masukkan judul pengumuman" required>
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Tipe</label>
+                      <select name="tipe" class="admin__filter-select">
+                        <option value="Informasi">Informasi</option>
+                        <option value="Penting">Penting</option>
+                        <option value="Himbauan">Himbauan</option>
+                      </select>
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Jam</label>
+                      <input type="text" name="jam" class="admin__filter-input" placeholder="08:00 - 16:00">
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Isi</label>
+                      <textarea name="isi" class="admin__filter-input" rows="3" placeholder="Masukkan isi pengumuman" required></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="admin__page-btn" id="modalBatalPgm">Batal</button>
+                  <button type="submit" class="admin__submit-btn">Simpan Pengumuman</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Modal Edit Pengumuman -->
+          <div class="modal-overlay" id="modalEditPengumuman">
+            <div class="modal" style="max-width:560px">
+              <div class="modal-header">
+                <h3 class="modal-title">Edit Pengumuman</h3>
+                <button type="button" class="modal-close" id="modalEditClosePgm">&times;</button>
+              </div>
+              <form method="POST" action="" id="formEditPengumuman">
+                <div class="modal-body">
+                  <div class="admin__settings-grid" style="grid-template-columns:1fr">
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Judul</label>
+                      <input type="text" name="judul" id="editPgmJudul" class="admin__filter-input" required>
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Tipe</label>
+                      <select name="tipe" id="editPgmTipe" class="admin__filter-select">
+                        <option value="Informasi">Informasi</option>
+                        <option value="Penting">Penting</option>
+                        <option value="Himbauan">Himbauan</option>
+                      </select>
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Jam</label>
+                      <input type="text" name="jam" id="editPgmJam" class="admin__filter-input" placeholder="08:00 - 16:00">
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Isi</label>
+                      <textarea name="isi" id="editPgmIsi" class="admin__filter-input" rows="3" required></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="admin__page-btn" id="modalEditBatalPgm">Batal</button>
+                  <button type="submit" class="admin__submit-btn">Simpan Perubahan</button>
+                </div>
+              </form>
+            </div>
           </div>
           <div class="admin__table-wrap">
             <table class="admin__table">
@@ -180,17 +230,8 @@
                     {% endif %}
                   </td>
                   <td>
-                    <form method="POST" action="../admin/pengumuman/edit/{{ a.id }}" style="display:inline;">
-                      <input type="hidden" name="judul" value="{{ a.judul }}">
-                      <input type="hidden" name="isi" value="{{ a.isi }}">
-                      <input type="hidden" name="jam" value="{{ a.jam }}">
-                      <select name="tipe" class="admin__filter-select admin__filter-select--sm" onchange="this.form.submit()">
-                        <option value="Informasi" {% if a.tipe == 'Informasi' %}selected{% endif %}>Informasi</option>
-                        <option value="Penting" {% if a.tipe == 'Penting' %}selected{% endif %}>Penting</option>
-                        <option value="Himbauan" {% if a.tipe == 'Himbauan' %}selected{% endif %}>Himbauan</option>
-                      </select>
-                    </form>
-                    <form method="POST" action="../admin/pengumuman/hapus/{{ a.id }}" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus pengumuman ini?')">
+                    <button type="button" class="admin__action-link" data-id="{{ a.id }}" data-judul="{{ a.judul }}" data-isi="{{ a.isi }}" data-jam="{{ a.jam }}" data-tipe="{{ a.tipe }}" onclick="bukaEditPengumuman(this)">Edit</button>
+                    <form method="POST" action="/admin/pengumuman/hapus/{{ a.id }}" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus pengumuman ini?')">
                       <button type="submit" class="admin__action-link admin__action-link--danger">Hapus</button>
                     </form>
                   </td>
@@ -204,6 +245,34 @@
     </div>
   </div>
 
-  <script src="../static/js/script.js"></script>
+  <script src="/static/js/script.js"></script>
+  <script>
+    (function() {
+      var overlayTambah = document.getElementById('modalTambahPengumuman');
+      var btn = document.getElementById('tambahPengumumanBtn');
+      var closeTambah = document.getElementById('modalClosePgm');
+      var batalTambah = document.getElementById('modalBatalPgm');
+      btn.addEventListener('click', function() { overlayTambah.classList.add('open'); });
+      closeTambah.addEventListener('click', function() { overlayTambah.classList.remove('open'); });
+      batalTambah.addEventListener('click', function() { overlayTambah.classList.remove('open'); });
+      overlayTambah.addEventListener('click', function(e) { if (e.target === overlayTambah) overlayTambah.classList.remove('open'); });
+
+      var overlayEdit = document.getElementById('modalEditPengumuman');
+      var closeEdit = document.getElementById('modalEditClosePgm');
+      var batalEdit = document.getElementById('modalEditBatalPgm');
+      closeEdit.addEventListener('click', function() { overlayEdit.classList.remove('open'); });
+      batalEdit.addEventListener('click', function() { overlayEdit.classList.remove('open'); });
+      overlayEdit.addEventListener('click', function(e) { if (e.target === overlayEdit) overlayEdit.classList.remove('open'); });
+    })();
+
+    function bukaEditPengumuman(el) {
+      document.getElementById('formEditPengumuman').action = '/admin/pengumuman/edit/' + el.getAttribute('data-id');
+      document.getElementById('editPgmJudul').value = el.getAttribute('data-judul');
+      document.getElementById('editPgmIsi').value = el.getAttribute('data-isi');
+      document.getElementById('editPgmJam').value = el.getAttribute('data-jam');
+      document.getElementById('editPgmTipe').value = el.getAttribute('data-tipe');
+      document.getElementById('modalEditPengumuman').classList.add('open');
+    }
+  </script>
 </body>
 </html>

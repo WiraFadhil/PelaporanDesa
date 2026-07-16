@@ -6,7 +6,7 @@
   <title>Kategori - Admin Pelaporan Desa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
   <div class="admin">
@@ -23,14 +23,14 @@
         </div>
       </div>
       <nav class="admin__nav">
-        <a href="../admin/" class="admin__nav-link">
+        <a href="/admin/" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             <polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
           Dashboard
         </a>
-        <a href="../admin/reports" class="admin__nav-link">
+        <a href="/admin/reports" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
@@ -39,7 +39,7 @@
           </svg>
           Kelola Laporan
         </a>
-        <a href="../admin/warga" class="admin__nav-link">
+        <a href="/admin/warga" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
             <circle cx="9" cy="7" r="4"/>
@@ -48,7 +48,7 @@
           </svg>
           Kelola Warga
         </a>
-        <a href="../admin/kategori" class="admin__nav-link active">
+        <a href="/admin/kategori" class="admin__nav-link active">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
             <line x1="9" y1="6" x2="15" y2="6"/>
@@ -57,13 +57,13 @@
           </svg>
           Kategori
         </a>
-        <a href="../admin/pengumuman" class="admin__nav-link">
+        <a href="/admin/pengumuman" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
           </svg>
           Pengumuman
         </a>
-        <a href="../admin/pengaturan" class="admin__nav-link">
+        <a href="/admin/pengaturan" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
             <circle cx="12" cy="12" r="3"/>
@@ -72,7 +72,7 @@
         </a>
       </nav>
       <div class="admin__sidebar-footer">
-        <a href="../admin/logout" class="admin__nav-link">
+        <a href="/admin/logout" class="admin__nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
             <polyline points="16 17 21 12 16 7"/>
@@ -115,38 +115,86 @@
             <h2 class="admin__card-title">Daftar Kategori</h2>
             <div class="admin__card-actions">
               <span class="admin__card-badge">{{ categories|length }} Kategori</span>
-              <button type="button" class="admin__submit-btn" id="toggleFormBtn">+ Tambah</button>
+              <button type="button" class="admin__submit-btn" id="tambahKategoriBtn">+ Tambah Kategori</button>
             </div>
           </div>
 
-          <!-- Form Tambah Kategori (sembunyi default) -->
-          <div id="formTambahKategori" style="display:none;">
-            <form method="POST" action="../admin/kategori/tambah" class="admin__form-inline">
-              <div class="admin__settings-grid">
-                <div class="admin__filter-group">
-                  <label class="admin__filter-label">Nama Kategori</label>
-                  <input type="text" name="nama" class="admin__filter-input" placeholder="Masukkan nama kategori" required>
-                </div>
-                <div class="admin__filter-group">
-                  <label class="admin__filter-label">Icon</label>
-                  <input type="text" name="icon" class="admin__filter-input" placeholder="Nama icon (misal: building, trash)">
-                </div>
-                <div class="admin__filter-group">
-                  <label class="admin__filter-label">Warna</label>
-                  <select name="warna" class="admin__filter-select">
-                    <option value="blue">Biru</option>
-                    <option value="green">Hijau</option>
-                    <option value="red">Merah</option>
-                    <option value="amber">Kuning</option>
-                    <option value="purple">Ungu</option>
-                    <option value="gray">Abu-abu</option>
-                  </select>
-                </div>
+          <!-- Modal Tambah Kategori -->
+          <div class="modal-overlay" id="modalTambahKategori">
+            <div class="modal">
+              <div class="modal-header">
+                <h3 class="modal-title">Tambah Kategori Baru</h3>
+                <button type="button" class="modal-close" id="modalCloseKtg">&times;</button>
               </div>
-              <div class="admin__settings-actions">
-                <button type="submit" class="admin__submit-btn">Simpan Kategori</button>
+              <form method="POST" action="/admin/kategori/tambah">
+                <div class="modal-body">
+                  <div class="admin__settings-grid" style="grid-template-columns:1fr">
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Nama Kategori</label>
+                      <input type="text" name="nama" class="admin__filter-input" placeholder="Masukkan nama kategori" required>
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Icon</label>
+                      <input type="text" name="icon" class="admin__filter-input" placeholder="Nama icon (misal: building, trash)">
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Warna</label>
+                      <select name="warna" class="admin__filter-select">
+                        <option value="blue">Biru</option>
+                        <option value="green">Hijau</option>
+                        <option value="red">Merah</option>
+                        <option value="amber">Kuning</option>
+                        <option value="purple">Ungu</option>
+                        <option value="gray">Abu-abu</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="admin__page-btn" id="modalBatalKtg">Batal</button>
+                  <button type="submit" class="admin__submit-btn">Simpan Kategori</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Modal Edit Kategori -->
+          <div class="modal-overlay" id="modalEditKategori">
+            <div class="modal">
+              <div class="modal-header">
+                <h3 class="modal-title">Edit Kategori</h3>
+                <button type="button" class="modal-close" id="modalEditCloseKtg">&times;</button>
               </div>
-            </form>
+              <form method="POST" action="" id="formEditKategori">
+                <div class="modal-body">
+                  <div class="admin__settings-grid" style="grid-template-columns:1fr">
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Nama Kategori</label>
+                      <input type="text" name="nama" id="editKtgNama" class="admin__filter-input" required>
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Icon</label>
+                      <input type="text" name="icon" id="editKtgIcon" class="admin__filter-input" placeholder="Nama icon (misal: building, trash)">
+                    </div>
+                    <div class="admin__filter-group">
+                      <label class="admin__filter-label">Warna</label>
+                      <select name="warna" id="editKtgWarna" class="admin__filter-select">
+                        <option value="blue">Biru</option>
+                        <option value="green">Hijau</option>
+                        <option value="red">Merah</option>
+                        <option value="amber">Kuning</option>
+                        <option value="purple">Ungu</option>
+                        <option value="gray">Abu-abu</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="admin__page-btn" id="modalEditBatalKtg">Batal</button>
+                  <button type="submit" class="admin__submit-btn">Simpan Perubahan</button>
+                </div>
+              </form>
+            </div>
           </div>
 
           <div class="admin__kategori-grid">
@@ -160,8 +208,8 @@
                 <span class="admin__kategori-count">{{ cat.jumlah_laporan }} laporan</span>
               </div>
               <div class="admin__kategori-actions">
-                <a href="../admin/kategori/edit/{{ cat.id }}" class="admin__action-link">Edit</a>
-                <form method="POST" action="../admin/kategori/hapus/{{ cat.id }}" onsubmit="return confirm('Yakin ingin menghapus kategori {{ cat.nama }}?')">
+                <button type="button" class="admin__action-link" data-id="{{ cat.id }}" data-nama="{{ cat.nama }}" data-icon="{{ cat.icon }}" data-warna="{{ cat.warna }}" onclick="bukaEditKategori(this)">Edit</button>
+                <form method="POST" action="/admin/kategori/hapus/{{ cat.id }}" onsubmit="return confirm('Yakin ingin menghapus kategori {{ cat.nama }}?')">
                   <button type="submit" class="admin__action-link admin__action-link--danger">Hapus</button>
                 </form>
               </div>
@@ -173,18 +221,33 @@
     </div>
   </div>
 
-  <script src="../static/js/script.js"></script>
+  <script src="/static/js/script.js"></script>
   <script>
-    document.getElementById('toggleFormBtn').addEventListener('click', function() {
-      var form = document.getElementById('formTambahKategori');
-      if (form.style.display === 'none') {
-        form.style.display = 'block';
-        this.textContent = 'Tutup';
-      } else {
-        form.style.display = 'none';
-        this.textContent = '+ Tambah Kategori';
-      }
-    });
+    (function() {
+      var overlayTambah = document.getElementById('modalTambahKategori');
+      var btn = document.getElementById('tambahKategoriBtn');
+      var closeTambah = document.getElementById('modalCloseKtg');
+      var batalTambah = document.getElementById('modalBatalKtg');
+      btn.addEventListener('click', function() { overlayTambah.classList.add('open'); });
+      closeTambah.addEventListener('click', function() { overlayTambah.classList.remove('open'); });
+      batalTambah.addEventListener('click', function() { overlayTambah.classList.remove('open'); });
+      overlayTambah.addEventListener('click', function(e) { if (e.target === overlayTambah) overlayTambah.classList.remove('open'); });
+
+      var overlayEdit = document.getElementById('modalEditKategori');
+      var closeEdit = document.getElementById('modalEditCloseKtg');
+      var batalEdit = document.getElementById('modalEditBatalKtg');
+      closeEdit.addEventListener('click', function() { overlayEdit.classList.remove('open'); });
+      batalEdit.addEventListener('click', function() { overlayEdit.classList.remove('open'); });
+      overlayEdit.addEventListener('click', function(e) { if (e.target === overlayEdit) overlayEdit.classList.remove('open'); });
+    })();
+
+    function bukaEditKategori(el) {
+      document.getElementById('formEditKategori').action = '/admin/kategori/edit/' + el.getAttribute('data-id');
+      document.getElementById('editKtgNama').value = el.getAttribute('data-nama');
+      document.getElementById('editKtgIcon').value = el.getAttribute('data-icon');
+      document.getElementById('editKtgWarna').value = el.getAttribute('data-warna');
+      document.getElementById('modalEditKategori').classList.add('open');
+    }
   </script>
 </body>
 </html>

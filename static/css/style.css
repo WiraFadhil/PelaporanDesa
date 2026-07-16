@@ -2991,6 +2991,8 @@ img {
 .admin__settings-actions {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
   padding-top: 8px;
 }
 
@@ -3037,6 +3039,15 @@ img {
 /* --- Form Padding Helper --- */
 .admin__form-padding {
   padding: 18px 22px;
+}
+
+/* --- Form Info Box --- */
+.admin__form-info {
+  background: var(--bg-secondary);
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.8;
 }
 
 /* --- Toggle Switch --- */

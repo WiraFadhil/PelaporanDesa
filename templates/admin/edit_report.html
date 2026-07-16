@@ -6,7 +6,7 @@
   <title>Edit Laporan - Admin Pelaporan Desa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
   <div class="admin">
@@ -19,15 +19,36 @@
         </div>
       </div>
       <nav class="admin__nav">
-        <a href="../admin/" class="admin__nav-link">Dashboard</a>
-        <a href="../admin/reports" class="admin__nav-link active">Kelola Laporan</a>
-        <a href="../admin/warga" class="admin__nav-link">Kelola Warga</a>
-        <a href="../admin/kategori" class="admin__nav-link">Kategori</a>
-        <a href="../admin/pengumuman" class="admin__nav-link">Pengumuman</a>
-        <a href="../admin/pengaturan" class="admin__nav-link">Pengaturan</a>
+        <a href="/admin/" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="/admin/reports" class="admin__nav-link active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Kelola Laporan
+        </a>
+        <a href="/admin/warga" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Kelola Warga
+        </a>
+        <a href="/admin/kategori" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="6" x2="15" y2="6"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="9" y1="14" x2="13" y2="14"/></svg>
+          Kategori
+        </a>
+        <a href="/admin/pengumuman" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Pengumuman
+        </a>
+        <a href="/admin/pengaturan" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          Pengaturan
+        </a>
       </nav>
       <div class="admin__sidebar-footer">
-        <a href="../admin/logout" class="admin__nav-link">Keluar</a>
+        <a href="/admin/logout" class="admin__nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Keluar
+        </a>
       </div>
     </aside>
 
@@ -44,65 +65,70 @@
           <a href="/" class="admin__header-link" title="Kembali ke Website">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </a>
+          <div class="admin__header-user">
+            <img src="https://ui-avatars.com/api/?name=Admin&background=1A56DB&color=fff&size=36" alt="Admin">
+          </div>
         </div>
       </header>
 
       <div class="admin__content">
-        <div class="admin__card" style="max-width:800px;margin:0 auto">
+        <div class="admin__card" style="max-width:720px;margin:0 auto">
           <div class="admin__card-header">
-            <h2 class="admin__card-title">Edit Laporan: {{ report.judul }}</h2>
+            <h2 class="admin__card-title">Edit Laporan</h2>
           </div>
-          <form method="POST" action="../admin/reports/edit/{{ report.id }}">
-            <div class="admin__settings-grid" style="padding:24px">
-              <div class="admin__filter-group">
-                <label class="admin__filter-label">Judul</label>
-                <input type="text" class="admin__filter-input" name="judul" value="{{ report.judul }}" required>
-              </div>
-              <div class="admin__filter-group" style="grid-column:span 2">
-                <label class="admin__filter-label">Deskripsi</label>
-                <textarea class="admin__filter-input" name="deskripsi" rows="4" style="resize:vertical" required>{{ report.deskripsi }}</textarea>
-              </div>
-              <div class="admin__filter-group">
-                <label class="admin__filter-label">Kategori</label>
-                <select name="kategori" class="admin__filter-select">
-                  {% for cat in categories %}
-                  <option value="{{ cat.nama }}" {% if report.kategori == cat.nama %}selected{% endif %}>{{ cat.nama }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="admin__filter-group">
-                <label class="admin__filter-label">Status</label>
-                <select name="status" class="admin__filter-select">
-                  <option value="Diajukan" {% if report.status == 'Diajukan' %}selected{% endif %}>Diajukan</option>
-                  <option value="Diproses" {% if report.status == 'Diproses' %}selected{% endif %}>Diproses</option>
-                  <option value="Selesai" {% if report.status == 'Selesai' %}selected{% endif %}>Selesai</option>
-                </select>
-              </div>
-              <div class="admin__filter-group">
-                <label class="admin__filter-label">Lokasi</label>
-                <input type="text" class="admin__filter-input" name="lokasi" value="{{ report.lokasi }}">
-              </div>
-              <div class="admin__filter-group">
-                <label class="admin__filter-label">Catatan</label>
-                <input type="text" class="admin__filter-input" name="catatan" value="{{ report.catatan }}" placeholder="Catatan admin...">
-              </div>
-              <div class="admin__filter-group" style="grid-column:span 2">
-                <div style="background:var(--bg-secondary);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px">
-                  <strong>Pelapor:</strong> {{ report.pelapor }} (NIK: {{ report.nik }})<br>
-                  <strong>RT/RW:</strong> {{ report.rt }}/{{ report.rw }}<br>
-                  <strong>Tanggal:</strong> {{ report.tanggal }}
+          <form method="POST" action="/admin/reports/edit/{{ report.id }}">
+            <div class="admin__settings">
+              <div class="admin__settings-grid">
+                <div class="admin__filter-group" style="grid-column:1/-1">
+                  <label class="admin__filter-label">Judul</label>
+                  <input type="text" class="admin__filter-input" name="judul" value="{{ report.judul }}" required>
+                </div>
+                <div class="admin__filter-group" style="grid-column:1/-1">
+                  <label class="admin__filter-label">Deskripsi</label>
+                  <textarea class="admin__filter-input" name="deskripsi" rows="4" required>{{ report.deskripsi }}</textarea>
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Kategori</label>
+                  <select name="kategori" class="admin__filter-select">
+                    {% for cat in categories %}
+                    <option value="{{ cat.nama }}" {% if report.kategori == cat.nama %}selected{% endif %}>{{ cat.nama }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Status</label>
+                  <select name="status" class="admin__filter-select">
+                    <option value="Diajukan" {% if report.status == 'Diajukan' %}selected{% endif %}>Diajukan</option>
+                    <option value="Diproses" {% if report.status == 'Diproses' %}selected{% endif %}>Diproses</option>
+                    <option value="Selesai" {% if report.status == 'Selesai' %}selected{% endif %}>Selesai</option>
+                  </select>
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Lokasi</label>
+                  <input type="text" class="admin__filter-input" name="lokasi" value="{{ report.lokasi }}">
+                </div>
+                <div class="admin__filter-group">
+                  <label class="admin__filter-label">Catatan Admin</label>
+                  <input type="text" class="admin__filter-input" name="catatan" value="{{ report.catatan }}" placeholder="Catatan admin...">
+                </div>
+                <div class="admin__filter-group" style="grid-column:1/-1">
+                  <div class="admin__form-info">
+                    <strong>Pelapor:</strong> {{ report.pelapor }} (NIK: {{ report.nik }})<br>
+                    <strong>RT/RW:</strong> {{ report.rt }}/{{ report.rw }}<br>
+                    <strong>Tanggal:</strong> {{ report.tanggal }}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="admin__settings-actions" style="padding:16px 24px">
-              <a href="../admin/reports" class="admin__page-btn">Kembali</a>
-              <button type="submit" class="admin__submit-btn">Simpan Perubahan</button>
+              <div class="admin__settings-actions">
+                <a href="/admin/reports" class="admin__page-btn">Kembali</a>
+                <button type="submit" class="admin__submit-btn">Simpan Perubahan</button>
+              </div>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-  <script src="../static/js/script.js"></script>
+  <script src="/static/js/script.js"></script>
 </body>
 </html>

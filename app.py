@@ -206,38 +206,55 @@ def index():
 
 # ── Auth Warga ──────────────────────────────────────────
 
-@app.route("/masuk", methods=["GET", "POST"])
+@app.route("/masuk")
 def masuk():
+    return redirect("/login")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
     """
-    Halaman login warga (GET = tampilkan form, POST = proses login).
-    Form method=POST biasa, kirim NIK + password. Setelah berhasil, redirect ke index.
+    Halaman login gabungan: warga (NIK) atau admin (username).
+    Tab dipilih via hidden field 'role'.
     """
     if request.method == "POST":
-        nik = request.form.get("nik", "").strip()
-        password = request.form.get("password", "").strip()
+        role = request.form.get("role", "warga")
 
-        if not nik or not password:
-            return render_template("masuk.html", error="NIK dan password harus diisi")
+        if role == "admin":
+            username = request.form.get("username", "").strip()
+            password = request.form.get("password", "").strip()
+            if not username or not password:
+                return render_template("login.html", error="Username dan password harus diisi")
 
-        resident = residents_col.find_one({"nik": nik})
-        if not resident:
-            return render_template("masuk.html", error="NIK tidak terdaftar")
-        if not resident.get("terdaftar") or "password" not in resident:
-            return render_template("masuk.html", error="Anda belum mendaftar. Silakan daftar terlebih dahulu.")
-        if not bcrypt.checkpw(password.encode(), resident["password"].encode()):
-            return render_template("masuk.html", error="NIK atau password salah")
-        if resident.get("status") != "Aktif":
-            return render_template("masuk.html", error="Akun Anda tidak aktif. Hubungi admin.")
+            admin = admins_col.find_one({"username": username})
+            if not admin or not bcrypt.checkpw(password.encode(), admin["password"].encode()):
+                return render_template("login.html", error="Username atau password salah")
 
-        # Simpan session — ini yang dipakai decorator resident_required
-        session["resident_id"] = s(resident["_id"])
-        session["resident_name"] = resident.get("nama", "")
-        session["resident_nik"] = nik
+            session["admin_id"] = s(admin["_id"])
+            session["admin_name"] = admin.get("nama", "Admin")
+            return redirect(url_for("admin_index"))
+        else:
+            nik = request.form.get("nik", "").strip()
+            password = request.form.get("password", "").strip()
 
-        return redirect(url_for("index"))
+            if not nik or not password:
+                return render_template("login.html", error="NIK dan password harus diisi", role="warga")
 
-    # GET: tampilkan form kosong
-    return render_template("masuk.html", error=None)
+            resident = residents_col.find_one({"nik": nik})
+            if not resident:
+                return render_template("login.html", error="NIK tidak terdaftar", role="warga")
+            if not resident.get("terdaftar") or "password" not in resident:
+                return render_template("login.html", error="Anda belum mendaftar. Silakan daftar terlebih dahulu.", role="warga")
+            if not bcrypt.checkpw(password.encode(), resident["password"].encode()):
+                return render_template("login.html", error="NIK atau password salah", role="warga")
+            if resident.get("status") != "Aktif":
+                return render_template("login.html", error="Akun Anda tidak aktif. Hubungi admin.", role="warga")
+
+            session["resident_id"] = s(resident["_id"])
+            session["resident_name"] = resident.get("nama", "")
+            session["resident_nik"] = nik
+            return redirect(url_for("index"))
+
+    return render_template("login.html", error=None)
 
 
 @app.route("/daftar", methods=["GET", "POST"])
@@ -246,8 +263,8 @@ def daftar():
     Halaman registrasi warga.
     Cek setting 'registrasi_warga' dulu — jika False, tolak.
     """
-    s = settings_col.find_one({"_id": "global"})
-    if s and not s.get("registrasi_warga", False):
+    reg_setting = settings_col.find_one({"_id": "global"})
+    if reg_setting and not reg_setting.get("registrasi_warga", False):
         return render_template("daftar.html", error="Pendaftaran warga sedang dinonaktifkan oleh admin")
 
     if request.method == "POST":
@@ -481,30 +498,9 @@ def informasi():
 #                   HALAMAN ADMIN
 # ═════════════════════════════════════════════════════════
 
-@app.route("/admin/login", methods=["GET", "POST"])
+@app.route("/admin/login")
 def admin_login():
-    """
-    Halaman login admin.
-    GET = tampilkan form.
-    POST = verifikasi username+password, set session admin_id.
-    """
-    if request.method == "POST":
-        username = request.form.get("username", "").strip()
-        password = request.form.get("password", "").strip()
-
-        if not username or not password:
-            return render_template("admin/login.html", error="Username dan password harus diisi")
-
-        admin = admins_col.find_one({"username": username})
-        if not admin or not bcrypt.checkpw(password.encode(), admin["password"].encode()):
-            return render_template("admin/login.html", error="Username atau password salah")
-
-        session["admin_id"] = s(admin["_id"])
-        session["admin_name"] = admin.get("nama", "Admin")
-
-        return redirect(url_for("admin_index"))
-
-    return render_template("admin/login.html", error=None)
+    return redirect("/login#admin")
 
 
 @app.route("/admin/logout")
@@ -512,7 +508,7 @@ def admin_logout():
     """Logout admin: hapus session admin"""
     session.pop("admin_id", None)
     session.pop("admin_name", None)
-    return redirect(url_for("admin_login"))
+    return redirect("/login#admin")
 
 
 # ── Dashboard Admin ─────────────────────────────────────
@@ -587,43 +583,26 @@ def admin_reports():
     )
 
 
-@app.route("/admin/reports/edit/<report_id>", methods=["GET", "POST"])
+@app.route("/admin/reports/edit/<report_id>", methods=["POST"])
 @admin_required
 def admin_edit_report(report_id):
-    """
-    Edit laporan: update status, catatan, dll.
-    GET = tampilkan form edit.
-    POST = simpan perubahan, redirect ke daftar laporan.
-    """
     oid = safe_id(report_id)
     if not oid:
         return redirect(url_for("admin_reports"))
 
-    report = reports_col.find_one({"_id": oid})
-    if not report:
-        return redirect(url_for("admin_reports"))
+    update = {}
+    for field in ["judul", "deskripsi", "kategori", "status", "lokasi"]:
+        val = request.form.get(field)
+        if val is not None:
+            update[field] = val.strip()
+    catatan = request.form.get("catatan", "").strip()
+    if catatan:
+        update["catatan"] = catatan
 
-    if request.method == "POST":
-        update = {}
-        for field in ["judul", "deskripsi", "kategori", "status", "lokasi"]:
-            val = request.form.get(field)
-            if val is not None:
-                update[field] = val.strip()
-        catatan = request.form.get("catatan", "").strip()
-        if catatan:
-            update["catatan"] = catatan
+    if update:
+        reports_col.update_one({"_id": oid}, {"$set": update})
 
-        if update:
-            reports_col.update_one({"_id": oid}, {"$set": update})
-
-        return redirect(url_for("admin_reports"))
-
-    categories = [category_dict(c) for c in categories_col.find().sort("nama", 1)]
-    return render_template(
-        "admin/edit_report.html",
-        report=report_dict(report),
-        categories=categories,
-    )
+    return redirect(url_for("admin_reports"))
 
 
 @app.route("/admin/reports/hapus/<report_id>", methods=["POST"])
@@ -702,33 +681,21 @@ def admin_tambah_warga():
     return redirect(url_for("admin_warga"))
 
 
-@app.route("/admin/warga/edit/<resident_id>", methods=["GET", "POST"])
+@app.route("/admin/warga/edit/<resident_id>", methods=["POST"])
 @admin_required
 def admin_edit_warga(resident_id):
-    """
-    Edit data warga.
-    GET = tampilkan form.
-    POST = simpan.
-    """
     oid = safe_id(resident_id)
     if not oid:
         return redirect(url_for("admin_warga"))
 
-    resident_data = residents_col.find_one({"_id": oid})
-    if not resident_data:
-        return redirect(url_for("admin_warga"))
-
-    if request.method == "POST":
-        update = {}
-        for field in ["nik", "nama", "alamat", "rt", "rw", "telepon", "status"]:
-            val = request.form.get(field)
-            if val is not None:
-                update[field] = val.strip()
-        if update:
-            residents_col.update_one({"_id": oid}, {"$set": update})
-        return redirect(url_for("admin_warga"))
-
-    return render_template("admin/edit_warga.html", resident=resident_dict(resident_data))
+    update = {}
+    for field in ["nik", "nama", "alamat", "rt", "rw", "telepon", "status"]:
+        val = request.form.get(field)
+        if val is not None:
+            update[field] = val.strip()
+    if update:
+        residents_col.update_one({"_id": oid}, {"$set": update})
+    return redirect(url_for("admin_warga"))
 
 
 @app.route("/admin/warga/hapus/<resident_id>", methods=["POST"])
@@ -798,8 +765,7 @@ def admin_edit_kategori(cat_id):
 
         return redirect(url_for("admin_kategori"))
 
-    category = category_dict(cat)
-    return render_template("admin/edit_kategori.html", category=category)
+    return redirect(url_for("admin_kategori"))
 
 
 @app.route("/admin/kategori/hapus/<cat_id>", methods=["POST"])
