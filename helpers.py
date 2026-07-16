@@ -32,7 +32,7 @@ def admin_required(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         if "admin_id" not in session:
-            return redirect(url_for("admin_login"))
+            return redirect(url_for("auth.admin_login"))
         return f(*args, **kwargs)
     return wrapper
 
@@ -41,13 +41,13 @@ def resident_required(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         if "resident_id" not in session:
-            return redirect(url_for("masuk"))
+            return redirect(url_for("auth.masuk"))
         resident = residents_col.find_one({"_id": ObjectId(session["resident_id"])})
         if not resident:
             session.pop("resident_id", None)
             session.pop("resident_name", None)
             session.pop("resident_nik", None)
-            return redirect(url_for("masuk"))
+            return redirect(url_for("auth.masuk"))
         return f(*args, **kwargs)
     return wrapper
 
